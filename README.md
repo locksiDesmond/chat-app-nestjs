@@ -5,6 +5,7 @@ NestJS, GraphQL, PostgreSQL, Socket.io
 ## Features
 
 - JWT Authentication
+- Event-driven approach for clean architecture
 - Real-time messaging (WebSockets)
 - Room-based chats
 - Message history
