@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginDto {
+  password: String!
+  username: String!
+}
+
+type LoginResponse {
+  access_token: String!
+}
+
+type MessageEntity {
+  id: ID!
+  room: String!
+  sender: UserEntity!
+  text: String!
+  timestamp: DateTime!
+}
+
+type Mutation {
+  login(input: LoginDto!): LoginResponse!
+  register(input: RegisterDto!): RegisterResponse!
+}
+
+type Query {
+  messages(room: String!): [MessageEntity!]!
+}
+
+input RegisterDto {
+  password: String!
+  username: String!
+}
+
+type RegisterResponse {
+  message: String!
+}
+
+type UserEntity {
+  id: ID!
+  lastSignInDate: DateTime!
+  messages: [MessageEntity!]!
+  username: String!
+}
