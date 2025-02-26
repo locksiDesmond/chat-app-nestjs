@@ -17,10 +17,10 @@ export class AuthService {
   async validateUser(username: string, pass: string) {
     const user = await this.userRepository.findOne({
       where: { username },
-      select: ['password'],
+      select: ['id', 'username', 'password'],
     });
 
-    if (user && user.validatePassword(user.password, pass)) {
+    if (user && user.validatePassword(pass, user.password)) {
       const { password, ...result } = user;
       return result;
     }
@@ -35,6 +35,7 @@ export class AuthService {
     }
 
     const payload = { username: user.username, sub: user.id };
+
     return {
       access_token: this.jwtService.sign(payload),
     };

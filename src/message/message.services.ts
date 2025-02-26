@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageEntity } from './entity/message.entity';
+import { OnEvent } from '@nestjs/event-emitter';
 
 @Injectable()
 export class MessageService {
@@ -9,6 +10,16 @@ export class MessageService {
     @InjectRepository(MessageEntity)
     private messageRepository: Repository<MessageEntity>,
   ) {}
+
+  @OnEvent('message.sent')
+  async handleMessageSent(payload: {
+    text: string;
+    senderId: number;
+    room: string;
+  }) {
+    const { text, senderId, room } = payload;
+    await this.saveMessage(text, senderId, room);
+  }
 
   async saveMessage(text: string, senderId: number, room: string) {
     const message = this.messageRepository.create({

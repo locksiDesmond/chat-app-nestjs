@@ -21,9 +21,6 @@ export class MessageEntity {
   @ManyToOne(() => UserEntity, (user) => user.messages)
   sender: UserEntity;
 
-  @Column()
-  senderId: number;
-
   @Field()
   @Column()
   room: string;
