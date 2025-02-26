@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    container_name: chat-postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: chatapp-server
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+    ports:
+      - '3090:3000'
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
